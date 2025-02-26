@@ -8,7 +8,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'Access_key2' 
+                    credentialsId: 'aws_access_key' 
                 ]]) {
                     sh '''
                     echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'Access_key2'
+                    credentialsId: 'aws_access_key'
                 ]]) {
                     sh '''
                     export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
