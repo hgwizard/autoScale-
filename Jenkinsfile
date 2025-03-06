@@ -34,14 +34,25 @@ pipeline {
         
         stage('Snyk Security Scan') {
             steps {
-                echo 'Running Snyk security scan...'
-                snykSecurity(
-                    snykInstallation: 'newscan',          // Name of Snyk installation in Jenkins
-                    snykTokenId: 'snyk01',              // Jenkins credential ID for Snyk API Token
-                    additionalArguments: '--severity-threshold=low --iac ${WORKSPACE}',
-                    failOnIssues: false,               // Won't fail the build on vulnerabilities
-                    monitorProjectOnBuild: false       // Won't monitor project in Snyk dashboard
-                )
+                script {
+                    try {
+                        echo 'Running Snyk security scan...'
+                        // Verify Snyk CLI is available
+                        sh 'snyk --version || echo "Snyk CLI not found"'
+                        
+                        snykSecurity(
+                            snykInstallation: 'newscan',
+                            snykTokenId: 'snyk01',
+                            additionalArguments: '--severity-threshold=low --iac', // Removed ${WORKSPACE} as it's implicit
+                            failOnIssues: false,
+                            monitorProjectOnBuild: false
+                        )
+                    } catch (Exception e) {
+                        echo "Snyk scan failed with error: ${e.getMessage()}"
+                        // Continue pipeline even if Snyk fails
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
             }
         }
         
@@ -82,6 +93,9 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed!'
+        }
+        unstable {
+            echo 'Pipeline completed but Snyk scan had issues'
         }
     }
 }
