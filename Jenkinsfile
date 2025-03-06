@@ -22,7 +22,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/hgwizard/autoScale-.git' 
             }
-        stages {
+      
         stage ('Testing') {
             steps {
                 jf '-v' 
@@ -33,9 +33,9 @@ pipeline {
                 jf 'rt bp'
                 jf 'rt dl jfrog-cli/test-file'
             }
-        } 
-    }
-        }
+            } 
+    
+        
         stage('Initialize Terraform') {
             steps {
                 sh '''
