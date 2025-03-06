@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
     environment {
@@ -21,6 +22,19 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/hgwizard/autoScale-.git' 
             }
+        stages {
+        stage ('Testing') {
+            steps {
+                jf '-v' 
+                jf 'c show'
+                jf 'rt ping'
+                sh 'touch test-file'
+                jf 'rt u test-file jfrog-cli/'
+                jf 'rt bp'
+                jf 'rt dl jfrog-cli/test-file'
+            }
+        } 
+    }
         }
         stage('Initialize Terraform') {
             steps {
@@ -69,35 +83,35 @@ pipeline {
     }
 }
 
-pipeline{
-    agent any
-    tools {
-        jfrog 'jfrog-cli'
-    }
-    stages {
-        stage ('Testing') {
-            steps {
-                jf '-v' 
-                jf 'c show'
-                jf 'rt ping'
-                sh 'touch test-file'
-                jf 'rt u test-file jfrog-cli/'
-                jf 'rt bp'
-                jf 'rt dl jfrog-cli/test-file'
-            }
-        } 
-    }
-}
 
-stage('Test') {
-    steps {
-        echo 'testing'
-        snykSecurity(
-            snykInstallation: 'newscan',  // Name of Snyk installation in Jenkins
-            snykTokenId: 'snyk01' , // Jenkins credential ID for Snyk API Token
-            additionalArguments: '--severity-threshold=low --iac ${WORKSPACE}',
-            failOnIssues: false ,
-            monitorProjectOnBuild: false  //
-        )
-    } 
-}
+
+// stage('Test') {
+//     steps {
+//         echo 'testing'
+//         snykSecurity(
+//             snykInstallation: 'newscan',  // Name of Snyk installation in Jenkins
+//             snykTokenId: 'snyk01' , // Jenkins credential ID for Snyk API Token
+//             additionalArguments: '--severity-threshold=low --iac ${WORKSPACE}',
+//             failOnIssues: false ,
+//             monitorProjectOnBuild: false  //
+//         )
+//     } 
+// }
+// pipeline{
+//     agent any
+//     tools {
+//         jfrog 'jfrog-cli'
+//     }
+//     stages {
+//         stage ('Testing') {
+//             steps {
+//                 jf '-v' 
+//                 jf 'c show'
+//                 jf 'rt ping'
+//                 sh 'touch test-file'
+//                 jf 'rt u test-file jfrog-cli/'
+//                 jf 'rt bp'
+//                 jf 'rt dl jfrog-cli/test-file'
+//             }
+//         } 
+//     }
