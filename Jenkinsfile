@@ -64,7 +64,7 @@ pipeline {
         }
     }
 
-    stage ('Testing') {
+    stage ('(Testing with JFrog') {
             steps {
                 jf '-v' 
                 jf 'c show'
