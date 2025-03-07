@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "class_bucket" {
-  bucket = "rob-hw" # Change to a globally unique name
+  bucket = "Rob-hw" # Change to a globally unique name
 
   tags = {
     Name        = "rob-hw"
-    Environment = "Dev"
+    Environment = "Jenkis"
   }
 }
+
