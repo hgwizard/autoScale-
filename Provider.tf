@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-
-}
 terraform {
   required_providers {
     aws = {
@@ -10,8 +6,14 @@ terraform {
     }
   }
 }
+provider "aws" {
+  region = "us-east-1"
+
+}
+
 resource "aws_s3_bucket" "robtest" {
-  bucket = "my-tf-test-bucket"
+  provider =  us-east-1
+    bucket = "my-tf-test-bucket"
 
   tags = {
     Name        = "My bucket"
