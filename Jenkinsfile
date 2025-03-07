@@ -77,12 +77,15 @@ pipeline {
     
         } 
     } 
-    post {
-            echo 'Terraform deployment completed successfully!'
+     post {
+        success {
+            echo 'Pipeline execution completed successfully!'
         }
         failure {
-            echo 'Terraform deployment failed!'
+            echo 'Pipeline execution failed!'
         }
+    }
+
     
 
 
