@@ -59,6 +59,20 @@ pipeline {
             }
         }
     }
+
+    stage ('Testing') {
+            steps {
+                jf '-v' 
+                jf 'c show'
+                jf 'rt ping'
+                sh 'touch test-file'
+                jf 'rt u test-file jfrog-cli/'
+                jf 'rt bp'
+                jf 'rt dl jfrog-cli/test-file'
+            }
+        } 
+    
+
     post {
         success {
             echo 'Terraform deployment completed successfully!'
@@ -67,8 +81,8 @@ pipeline {
             echo 'Terraform deployment failed!'
         }
     }
-}
 
+}
 // pipeline{
 //     agent any
 //     tools {

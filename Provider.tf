@@ -10,3 +10,11 @@ terraform {
     }
   }
 }
+resource "aws_s3_bucket" "robtest" {
+  bucket = "my-tf-test-bucket"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
