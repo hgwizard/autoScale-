@@ -1,22 +1,12 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
 provider "aws" {
-  region = "us-east-1"
-
+  region = "us-east-1" # Change this to your desired region
 }
 
-resource "aws_s3_bucket" "robtest" {
-  provider =  us-east-1
-    bucket = "my-tf-test-bucket"
+resource "aws_s3_bucket" "class_bucket" {
+  bucket = "rob-hw" # Change to a globally unique name
 
   tags = {
-    Name        = "My bucket"
+    Name        = "rob-hw"
     Environment = "Dev"
   }
 }
