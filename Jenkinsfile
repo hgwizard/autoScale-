@@ -3,10 +3,10 @@ pipeline {
     environment {
         AWS_REGION = 'us-east-1' 
     }
-    tools{
+    tools {
         jfrog 'jfrog-cli'
-        
     }
+        
     stages {
         stage('Set AWS Credentials') {
             steps {
@@ -62,7 +62,6 @@ pipeline {
                 }
             }
         }
-    }
 
     stage ('(Testing JFrog)') {
             steps {
@@ -76,17 +75,17 @@ pipeline {
             }
         } 
     
-
+        } 
+    } 
     post {
-        success {
             echo 'Terraform deployment completed successfully!'
         }
         failure {
             echo 'Terraform deployment failed!'
         }
-    }
+    
 
-}
+
 // pipeline{
 //     agent any
 //     tools {
