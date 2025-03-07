@@ -3,6 +3,10 @@ pipeline {
     environment {
         AWS_REGION = 'us-east-1' 
     }
+    tools{
+        jfrog 'jfrog-cli'
+        
+    }
     stages {
         stage('Set AWS Credentials') {
             steps {
